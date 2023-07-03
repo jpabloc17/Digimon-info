@@ -36,7 +36,8 @@ function showMoreInfo(digimon) {
 function createNewCards(digimon) {
   cardSection.replaceChildren();
   console.log(digimon);
-  const { id, name, images, levels, attributes, types, fields } = digimon;
+  const { id, name, images, levels, attributes, types, fields, descriptions } =
+    digimon;
   const div = document.createElement("div");
   div.classList.add("digimon-card-2");
   // Id
@@ -69,6 +70,14 @@ function createNewCards(digimon) {
 
   divInfo.append(level, attribute, type, field);
 
+  //  Description
+  const descriptionContainer = document.createElement("div");
+  const descriptionTitle = document.createElement("h3");
+  descriptionTitle.textContent = "Description";
+  const description = document.createElement("p");
+  description.textContent = filterDescription(descriptions);
+  descriptionContainer.append(descriptionTitle, description);
+
   // back to main button
   const btn = document.createElement("button");
   btn.textContent = "Back";
@@ -76,11 +85,12 @@ function createNewCards(digimon) {
   btn.addEventListener("click", (e) => {
     backBtn();
   });
-  div.append(digimonId, names, img, divInfo, btn);
+  div.append(digimonId, names, img, divInfo, descriptionContainer, btn);
   cardSection.append(div);
   console.log(div);
 }
 
+//  Filter Functions
 function levelContainerInfo(levels) {
   const levelContainer = document.createElement("div");
   levelContainer.classList.add("info-container");
@@ -169,6 +179,16 @@ function fieldInfoContainer(fields) {
   }
 }
 
+function filterDescription(descriptionArr) {
+  for (let index = 0; index < descriptionArr.length; index++) {
+    if (descriptionArr[index].language === "en_us") {
+      return descriptionArr[index].description;
+    }
+  }
+  return "no description";
+}
+
+//  Back callback Function
 function backBtn() {
   cardSection.replaceChildren();
   fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
