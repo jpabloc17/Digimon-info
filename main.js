@@ -195,9 +195,24 @@ function backBtn() {
   fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
     .then((response) => response.json())
     .then((digimons) => createDigimonCard(digimons.content));
+  form.style.display = "";
 }
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(e.target[0].value);
+  cardSection.replaceChildren();
+  const characterName = e.target[0].value;
+  fetch(`https://digimon-api.com/api/v1/digimon/${characterName}`)
+    .then((response) => response.json())
+    .then((digimon) => createNewCards(digimon))
+    .catch((error) => {
+      form.style.display = "none";
+      const errorMessage = document.createElement("h3");
+      errorMessage.textContent = "Digimon no found!";
+      const btn = document.createElement("button");
+      btn.textContent = "Back";
+      btn.addEventListener("click", backBtn);
+      cardSection.append(errorMessage, btn);
+    });
+  form.reset();
 });
