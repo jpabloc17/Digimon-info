@@ -17,12 +17,17 @@ function createDigimonCard(digimons) {
     img.alt = `${digimon.name} Picture`;
     const moreInfo = document.createElement("button");
     moreInfo.textContent = "More Info";
-    moreInfo.addEventListener("click", showMoreInfo);
+    moreInfo.addEventListener("click", (e) => {
+      showMoreInfo(digimon.name);
+    });
     div.append(digimonId, name, img, moreInfo);
     cardSection.appendChild(div);
   });
 }
 
-function showMoreInfo(e) {
-  console.log("here");
+function showMoreInfo(digimon) {
+  fetch(`https://digimon-api.com/api/v1/digimon/${digimon}`)
+    .then((response) => response.json())
+    .then((digimon) => console.log(digimon))
+    .catch((error) => console.log(error));
 }
