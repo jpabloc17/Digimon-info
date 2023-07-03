@@ -1,5 +1,6 @@
 const cardSection = document.querySelector("#digimons-container");
-const backToMainBtn = document.getElementById("back-main");
+const form = document.querySelector("#characters-form");
+console.log(form);
 console.log(cardSection);
 fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
   .then((response) => response.json())
@@ -195,4 +196,8 @@ function backBtn() {
     .then((response) => response.json())
     .then((digimons) => createDigimonCard(digimons.content));
 }
-// }
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log(e.target[0].value);
+});
