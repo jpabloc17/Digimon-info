@@ -21,3 +21,26 @@ body {
   width: 200px;
   height: 200px;
 }
+
+.digimon-card-2 {
+  display: grid;
+  justify-items: center;
+  border: 10px solid black;
+  border-radius: 10px;
+  margin: 0 10%;
+  padding: 20px;
+}
+
+.digimon-card-2 .info-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 10px auto 0px;
+  width: 80%;
+}
+
+.info-container > ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
