@@ -33,8 +33,24 @@ function showMoreInfo(digimon) {
 }
 
 function createNewCards(digimon) {
+  cardSection.replaceChildren();
+  console.log(digimon);
+  const { id, name, images } = digimon;
   const div = document.createElement("div");
   div.classList.add("digimon-card-2");
+  // Id
+  const digimonId = document.createElement("span");
+  digimonId.textContent = `#${id}`;
+  // Name
+  const names = document.createElement("h3");
+  names.textContent = name;
+
+  // Image
+  const img = document.createElement("img");
+  img.src = images[0].href;
+  img.alt = `${name} picture`;
+
+  div.append(digimonId, names, img);
   cardSection.append(div);
   console.log(div);
 }
