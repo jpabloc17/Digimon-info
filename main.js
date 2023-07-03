@@ -15,7 +15,14 @@ function createDigimonCard(digimons) {
     const img = document.createElement("img");
     img.src = digimon.image;
     img.alt = `${digimon.name} Picture`;
-    div.append(digimonId, name, img);
+    const moreInfo = document.createElement("button");
+    moreInfo.textContent = "More Info";
+    moreInfo.addEventListener("click", showMoreInfo);
+    div.append(digimonId, name, img, moreInfo);
     cardSection.appendChild(div);
   });
+}
+
+function showMoreInfo(e) {
+  console.log("here");
 }
