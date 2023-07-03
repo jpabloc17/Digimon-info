@@ -28,6 +28,13 @@ function createDigimonCard(digimons) {
 function showMoreInfo(digimon) {
   fetch(`https://digimon-api.com/api/v1/digimon/${digimon}`)
     .then((response) => response.json())
-    .then((digimon) => console.log(digimon))
+    .then((digimon) => createNewCards(digimon))
     .catch((error) => console.log(error));
+}
+
+function createNewCards(digimon) {
+  const div = document.createElement("div");
+  div.classList.add("digimon-card-2");
+  cardSection.append(div);
+  console.log(div);
 }
