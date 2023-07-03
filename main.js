@@ -1,4 +1,5 @@
 const cardSection = document.querySelector("#digimons-container");
+const backToMainBtn = document.getElementById("back-main");
 console.log(cardSection);
 fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
   .then((response) => response.json())
@@ -68,7 +69,14 @@ function createNewCards(digimon) {
 
   divInfo.append(level, attribute, type, field);
 
-  div.append(digimonId, names, img, divInfo);
+  // back to main button
+  const btn = document.createElement("button");
+  btn.textContent = "Back";
+
+  btn.addEventListener("click", (e) => {
+    backBtn();
+  });
+  div.append(digimonId, names, img, divInfo, btn);
   cardSection.append(div);
   console.log(div);
 }
@@ -160,3 +168,11 @@ function fieldInfoContainer(fields) {
     return fieldContainer;
   }
 }
+
+function backBtn() {
+  cardSection.replaceChildren();
+  fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
+    .then((response) => response.json())
+    .then((digimons) => createDigimonCard(digimons.content));
+}
+// }
