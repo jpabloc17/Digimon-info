@@ -1,3 +1,23 @@
 body {
-  background-color: rgb(175, 165, 165);
+  text-align: center;
+}
+
+#digimons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 0 auto;
+}
+
+.digimon-card {
+  border: 1px solid black;
+  display: grid;
+  align-content: space-around;
+  justify-items: center;
+  margin: 10px;
+  padding: 20px;
+}
+
+.digimon-card img {
+  width: 200px;
+  height: 200px;
 }
