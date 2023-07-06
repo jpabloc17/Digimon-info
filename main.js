@@ -1,7 +1,6 @@
 const cardSection = document.querySelector("#digimons-container");
 const form = document.querySelector("#characters-form");
-console.log(form);
-console.log(cardSection);
+
 fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
   .then((response) => response.json())
   .then((digimonData) => createDigimonCard(digimonData.content));
@@ -30,13 +29,11 @@ function createDigimonCard(digimons) {
 function showMoreInfo(digimon) {
   fetch(`https://digimon-api.com/api/v1/digimon/${digimon}`)
     .then((response) => response.json())
-    .then((digimon) => createNewCards(digimon))
-    .catch((error) => console.log(error));
+    .then((digimon) => createNewCards(digimon));
 }
 
 function createNewCards(digimon) {
   cardSection.replaceChildren();
-  console.log(digimon);
   const { id, name, images, levels, attributes, types, fields, descriptions } =
     digimon;
   const div = document.createElement("div");
@@ -88,7 +85,6 @@ function createNewCards(digimon) {
   });
   div.append(digimonId, names, img, divInfo, descriptionContainer, btn);
   cardSection.append(div);
-  console.log(div);
 }
 
 //  Filter Functions
@@ -207,12 +203,19 @@ form.addEventListener("submit", (e) => {
     .then((digimon) => createNewCards(digimon))
     .catch((error) => {
       form.style.display = "none";
-      const errorMessage = document.createElement("h3");
-      errorMessage.textContent = "Digimon no found!";
-      const btn = document.createElement("button");
-      btn.textContent = "Back";
-      btn.addEventListener("click", backBtn);
-      cardSection.append(errorMessage, btn);
+      createButton();
     });
   form.reset();
 });
+
+function errorForm() {
+  const div = document.createElement("div");
+  div.classList.add("error-container");
+  const errorMessage = document.createElement("h3");
+  errorMessage.textContent = "Digimon no found!";
+  const btn = document.createElement("button");
+  btn.textContent = "Back";
+  btn.addEventListener("click", backBtn);
+  div.append(errorMessage, btn);
+  cardSection.append(div);
+}
