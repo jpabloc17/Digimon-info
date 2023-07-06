@@ -34,15 +34,12 @@ function showMoreInfo(digimon) {
 
 function createNewCards(digimon) {
   cardSection.replaceChildren();
-  const { id, name, images, levels, attributes, types, fields, descriptions } =
+  const { name, images, levels, attributes, types, fields, descriptions } =
     digimon;
   const div = document.createElement("div");
   div.classList.add("digimon-card-2");
-  // Id
-  const digimonId = document.createElement("span");
-  digimonId.textContent = `#${id}`;
   // Name
-  const names = document.createElement("h3");
+  const names = document.createElement("h2");
   names.textContent = name;
 
   // Image
@@ -70,7 +67,7 @@ function createNewCards(digimon) {
 
   //  Description
   const descriptionContainer = document.createElement("div");
-  const descriptionTitle = document.createElement("h3");
+  const descriptionTitle = document.createElement("h2");
   descriptionTitle.textContent = "Description";
   const description = document.createElement("p");
   description.textContent = filterDescription(descriptions);
@@ -78,12 +75,12 @@ function createNewCards(digimon) {
 
   // back to main button
   const btn = document.createElement("button");
-  btn.textContent = "Back";
+  btn.textContent = "X";
 
   btn.addEventListener("click", (e) => {
     backBtn();
   });
-  div.append(digimonId, names, img, divInfo, descriptionContainer, btn);
+  div.append(names, img, divInfo, descriptionContainer, btn);
   cardSection.append(div);
 }
 
@@ -91,10 +88,10 @@ function createNewCards(digimon) {
 function levelContainerInfo(levels) {
   const levelContainer = document.createElement("div");
   levelContainer.classList.add("info-container");
-  const h4 = document.createElement("h4");
-  h4.textContent = "Level";
+  const h3 = document.createElement("h3");
+  h3.textContent = "Level";
   const level = document.createElement("ul");
-  levelContainer.append(h4, level);
+  levelContainer.append(h3, level);
   if (levels.length === 0) {
     const li = document.createElement("li");
     li.textContent = "No more info";
@@ -113,10 +110,10 @@ function levelContainerInfo(levels) {
 function attributeInfoContainer(attributes) {
   const attributesContainer = document.createElement("div");
   attributesContainer.classList.add("info-container");
-  const h4 = document.createElement("h4");
-  h4.textContent = "Attribute";
+  const h3 = document.createElement("h3");
+  h3.textContent = "Attribute";
   const attribute = document.createElement("ul");
-  attributesContainer.append(h4, attribute);
+  attributesContainer.append(h3, attribute);
   if (attributes.length === 0) {
     const li = document.createElement("li");
     li.textContent = "No more info";
@@ -135,10 +132,10 @@ function attributeInfoContainer(attributes) {
 function typeInfoContainer(types) {
   const typeContainer = document.createElement("div");
   typeContainer.classList.add("info-container");
-  const h4 = document.createElement("h4");
-  h4.textContent = "Type";
+  const h3 = document.createElement("h3");
+  h3.textContent = "Type";
   const type = document.createElement("ul");
-  typeContainer.append(h4, type);
+  typeContainer.append(h3, type);
   if (types.length === 0) {
     const li = document.createElement("li");
     li.textContent = "No more info";
@@ -157,10 +154,10 @@ function typeInfoContainer(types) {
 function fieldInfoContainer(fields) {
   const fieldContainer = document.createElement("div");
   fieldContainer.classList.add("info-container");
-  const h4 = document.createElement("h4");
-  h4.textContent = "Field";
+  const h3 = document.createElement("h3");
+  h3.textContent = "Field";
   const field = document.createElement("ul");
-  fieldContainer.append(h4, field);
+  fieldContainer.append(h3, field);
   if (fields.length === 0) {
     const li = document.createElement("li");
     li.textContent = "No more info";
@@ -203,7 +200,7 @@ form.addEventListener("submit", (e) => {
     .then((digimon) => createNewCards(digimon))
     .catch((error) => {
       form.style.display = "none";
-      createButton();
+      errorForm();
     });
   form.reset();
 });
