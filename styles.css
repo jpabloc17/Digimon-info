@@ -1,19 +1,39 @@
+:root {
+  --background: url("https://gamefreaks365.com/wp-content/uploads/2022/07/Digimon-Top-5-games-1536x861.jpg");
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  background-image: var(--background);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
+  -webkit-text-stroke: 2px black;
+  font-family: Arial, Helvetica, sans-serif;
+  width: fit-content;
+  padding: 0 40px;
+  margin: 0 auto;
+  background-color: rgba(240, 248, 255, 0.247);
+  border: 5px solid rgba(0, 0, 0, 0.767);
+  border-radius: 20px;
+  color: white;
   font-size: 60px;
-  filter: drop-shadow(0 5px 3px #6f6b6d);
+  font-weight: 900;
+  filter: drop-shadow(5px 5px 5px #000000);
 }
 
 label {
-  font-size: large;
+  filter: drop-shadow(0 5px 3px #000000);
+  color: rgb(255, 255, 255);
+  font-size: x-large;
   font-weight: 550;
 }
 
@@ -36,6 +56,7 @@ label {
 }
 
 .digimon-card {
+  background-color: white;
   border: 1px solid black;
   display: grid;
   align-content: space-around;
@@ -84,12 +105,17 @@ button:hover {
   display: grid;
   justify-items: center;
   border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
-  margin: 0 10%;
+  margin: 0 8%;
   padding: 20px;
   position: relative;
   overflow: hidden;
+}
+
+.digimon-card-2 img {
+  width: 500px;
 }
 
 .digimon-card-2 .info-details-container {
@@ -108,6 +134,10 @@ button:hover {
   margin: 0;
 }
 
+.digimon-card-2 p {
+  line-height: 1.5;
+}
+
 .info-container > ul {
   list-style: none;
   padding: 0;
@@ -117,4 +147,25 @@ button:hover {
 .digimon-card-2 button {
   position: absolute;
   right: 10px;
+}
+
+.error-container h3 {
+  margin: 20px auto;
+  width: fit-content;
+  color: #ffffff;
+  font-size: 30px;
+  filter: drop-shadow(2px 4px 6px black);
+  background: #6b60601c;
+}
+
+@media screen and (max-width: 420px) {
+  .digimon-card-2 img {
+    width: 100%;
+  }
+  .info-container {
+    width: 100px;
+  }
+  h1 {
+    font-size: 40px;
+  }
 }

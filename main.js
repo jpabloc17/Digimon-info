@@ -1,9 +1,15 @@
 const cardSection = document.querySelector("#digimons-container");
 const form = document.querySelector("#characters-form");
 
-fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
-  .then((response) => response.json())
-  .then((digimonData) => createDigimonCard(digimonData.content));
+const displayAllBtn = document.querySelector(".show-all");
+displayAllBtn.addEventListener("click", showAllDigimon);
+
+function showAllDigimon() {
+  displayAllBtn.style.display = "none";
+  fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
+    .then((response) => response.json())
+    .then((digimonData) => createDigimonCard(digimonData.content));
+}
 
 function createDigimonCard(digimons) {
   digimons.forEach((digimon) => {
@@ -67,6 +73,7 @@ function createNewCards(digimon) {
 
   //  Description
   const descriptionContainer = document.createElement("div");
+  descriptionContainer.classList.add("description");
   const descriptionTitle = document.createElement("h2");
   descriptionTitle.textContent = "Description";
   const description = document.createElement("p");
@@ -192,6 +199,7 @@ function backBtn() {
 }
 
 form.addEventListener("submit", (e) => {
+  displayAllBtn.style.display = "none";
   e.preventDefault();
   cardSection.replaceChildren();
   const characterName = e.target[0].value;
@@ -209,7 +217,7 @@ function errorForm() {
   const div = document.createElement("div");
   div.classList.add("error-container");
   const errorMessage = document.createElement("h3");
-  errorMessage.textContent = "Digimon no found!";
+  errorMessage.textContent = "Digimon not found...";
   const btn = document.createElement("button");
   btn.textContent = "Back";
   btn.addEventListener("click", backBtn);
