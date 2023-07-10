@@ -3,20 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Digimon Wiki</title>
+    <title>Digipedia</title>
     <script src="main.js" defer></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
-      <h1>DIGIMONS WIKI</h1>
+      <h1>DIGIPEDIA</h1>
       <form action="GET" method="get" id="characters-form">
         <label>
           <input
             type="text"
+            autocomplete="off"
             id="characters-form-search"
             class="search-characters"
             placeholder="Search Characters"
+            required
           />
         </label>
       </form>
