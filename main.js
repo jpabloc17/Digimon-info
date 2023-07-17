@@ -1,43 +1,54 @@
 const cardSection = document.querySelector("#digimons-container");
 const form = document.querySelector("#characters-form");
-
 const displayAllBtn = document.querySelector(".show-all");
+
+// Create the elements that contain the cards of the main page
+function createCardElements(digimon) {
+  const div = document.createElement("div");
+  div.classList.add("digimon-card");
+  const digimonId = document.createElement("span");
+  digimonId.textContent = `#${digimon.id}`;
+  const name = document.createElement("h3");
+  name.textContent = digimon.name;
+  const img = document.createElement("img");
+  img.src = digimon.image;
+  img.alt = `${digimon.name} Picture`;
+  const moreInfo = document.createElement("button");
+  moreInfo.textContent = "More Info";
+  // Add an click event to "More Info"
+  moreInfo.addEventListener("click", (e) => {
+    showMoreInfo(digimon.name);
+  });
+  div.append(digimonId, name, img, moreInfo);
+  cardSection.appendChild(div);
+}
+
+// Display all digimon card on the main page
 displayAllBtn.addEventListener("click", showAllDigimon);
 
 function showAllDigimon() {
-  displayAllBtn.style.display = "none";
-  fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
+  fetch("https://digimon-api.com/api/v1/digimon?pageSize=50")
     .then((response) => response.json())
     .then((digimonData) => createDigimonCard(digimonData.content));
 }
 
 function createDigimonCard(digimons) {
-  digimons.forEach((digimon) => {
-    const div = document.createElement("div");
-    div.classList.add("digimon-card");
-    const digimonId = document.createElement("span");
-    digimonId.textContent = `#${digimon.id}`;
-    const name = document.createElement("h3");
-    name.textContent = digimon.name;
-    const img = document.createElement("img");
-    img.src = digimon.image;
-    img.alt = `${digimon.name} Picture`;
-    const moreInfo = document.createElement("button");
-    moreInfo.textContent = "More Info";
-    moreInfo.addEventListener("click", (e) => {
-      showMoreInfo(digimon.name);
-    });
-    div.append(digimonId, name, img, moreInfo);
-    cardSection.appendChild(div);
-  });
+  cardSection.replaceChildren();
+  digimons.forEach((digimon) => createCardElements(digimon));
 }
 
 function showMoreInfo(digimon) {
   fetch(`https://digimon-api.com/api/v1/digimon/${digimon}`)
     .then((response) => response.json())
-    .then((digimon) => createNewCards(digimon));
+    .then((digimon) => createNewCards(digimon))
+    .catch((error) => {
+      form.style.display = "none";
+      levelSelect.style.display = "none";
+      errorForm();
+    });
 }
 
+// Create a new card after click "more info".
 function createNewCards(digimon) {
   cardSection.replaceChildren();
   const { name, images, levels, attributes, types, fields, descriptions } =
@@ -181,39 +192,33 @@ function fieldInfoContainer(fields) {
 }
 
 function filterDescription(descriptionArr) {
-  for (let index = 0; index < descriptionArr.length; index++) {
-    if (descriptionArr[index].language === "en_us") {
-      return descriptionArr[index].description;
-    }
-  }
-  return "no description";
+  return descriptionArr.map((element) => {
+    return element.language === "en_us"
+      ? element.description
+      : "no description";
+  });
 }
 
 //  Back callback Function
 function backBtn() {
   cardSection.replaceChildren();
-  fetch("https://digimon-api.com/api/v1/digimon?pageSize=20")
-    .then((response) => response.json())
-    .then((digimons) => createDigimonCard(digimons.content));
+  showAllDigimon();
   form.style.display = "";
+  displayAllBtn.style.display = "";
+  levelSelect.style.display = "";
 }
 
 form.addEventListener("submit", (e) => {
-  displayAllBtn.style.display = "none";
   e.preventDefault();
   cardSection.replaceChildren();
   const characterName = e.target[0].value;
-  fetch(`https://digimon-api.com/api/v1/digimon/${characterName}`)
-    .then((response) => response.json())
-    .then((digimon) => createNewCards(digimon))
-    .catch((error) => {
-      form.style.display = "none";
-      errorForm();
-    });
+  showMoreInfo(characterName);
   form.reset();
 });
 
 function errorForm() {
+  displayAllBtn.style.display = "none";
+
   const div = document.createElement("div");
   div.classList.add("error-container");
   const errorMessage = document.createElement("h3");
@@ -269,7 +274,7 @@ levelSelect.addEventListener("change", (e) => {
 });
 
 function filterLevel(target) {
-  for (let i = 1; i <= 20; i++) {
+  for (let i = 1; i <= 50; i++) {
     fetch(`https://digimon-api.com/api/v1/digimon/${i}`)
       .then((response) => response.json())
       .then((digimon) => displayCardsByLevel(digimon, target));
