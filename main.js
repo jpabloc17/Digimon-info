@@ -224,3 +224,68 @@ function errorForm() {
   div.append(errorMessage, btn);
   cardSection.append(div);
 }
+
+// Dropdown Menu
+
+const levelSelect = document.querySelector("#level");
+
+// Create option and values for the select tag
+
+/* Whenever a user makes a request to this API, it only returns an array with five items inside and to get the rest of the items, a different url must be used, that's the reason why two search requests are used in the function to create the tag options. */
+
+function createLevelOptions() {
+  fetch("https://www.digi-api.com/api/v1/level")
+    .then((response) => response.json())
+    .then((data) => {
+      data.content.fields.forEach((element) => {
+        const option = document.createElement("option");
+        option.value = element.name;
+        option.textContent = element.name;
+        levelSelect.append(option);
+      });
+    });
+
+  fetch("https://www.digi-api.com/api/v1/level?page=1")
+    .then((response) => response.json())
+    .then((data) => {
+      data.content.fields.forEach((element) => {
+        if (element.name !== "Unknown" && element.name !== "Digitama") {
+          const option = document.createElement("option");
+          option.value = element.name;
+          option.textContent = element.name;
+          levelSelect.append(option);
+        }
+      });
+    });
+}
+
+createLevelOptions();
+
+levelSelect.addEventListener("change", (e) => {
+  cardSection.replaceChildren();
+  const target = e.target.value;
+  filterLevel(target);
+  levelSelect.value = "";
+});
+
+function filterLevel(target) {
+  for (let i = 1; i <= 20; i++) {
+    fetch(`https://digimon-api.com/api/v1/digimon/${i}`)
+      .then((response) => response.json())
+      .then((digimon) => displayCardsByLevel(digimon, target));
+  }
+}
+
+function displayCardsByLevel(digimon, target) {
+  digimon.levels.map((element) => {
+    if (element.level === target) {
+      const digimonObj = {
+        id: digimon.id,
+        name: digimon.name,
+        image: digimon.images[0].href,
+        moreInfo: `https://digimon-api.com/api/v1/digimon/${digimon.id}`,
+      };
+      createCardElements(digimonObj);
+    }
+  });
+}
