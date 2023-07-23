@@ -10,7 +10,9 @@ The Digipedia can run without any additional installations. Anyone can feel free
 
 ## Usage
 
-On Digipedia there is a "Show all" button that can be clicked to display all the cards with the digimon's name and picture. There is a "More Info" button that can be clicked on each card to display more information about the digimon. There is also a search bar that can be used to search for a specific digimon. If the digimon is not found, a new message will be displayed on the screen and the search bar will be removed. To see the cards again there is no need to refresh the page, there is a "X" button to close the card and go back to the main page.
+On Digipedia there is a "Show all" button that can be clicked to display all the cards with the digimon's name and picture. There is a "More Info" button that can be clicked on each card to display more information about the digimon. There is also a search bar that can be used to search for a specific digimon. If the digimon is not found, a new message will be displayed on the screen and the search bar will be removed. To see the cards again there is no need to refresh the page, there is a "X" button to close the card and go back to the main page. There is also an option to display the digimons for a specific level.
+
+<video src="media/digipedia.mp4" controls></video>
 
 ## Contributing
 

@@ -27,7 +27,7 @@ function createCardElements(digimon) {
 displayAllBtn.addEventListener("click", showAllDigimon);
 
 function showAllDigimon() {
-  fetch("https://digimon-api.com/api/v1/digimon?pageSize=50")
+  fetch("https://digimon-api.com/api/v1/digimon?pageSize=180")
     .then((response) => response.json())
     .then((digimonData) => createDigimonCard(digimonData.content));
 }
@@ -103,6 +103,8 @@ function createNewCards(digimon) {
 }
 
 //  Filter Functions
+/* Some of the arrays where we are going to obtain the information are empty, so here we use "conditionals" to review them and be able to create the elements that we are going to show in the DOM */
+
 function levelContainerInfo(levels) {
   const levelContainer = document.createElement("div");
   levelContainer.classList.add("info-container");
@@ -199,7 +201,7 @@ function filterDescription(descriptionArr) {
   });
 }
 
-//  Back callback Function
+//  Go-Back button Function
 function backBtn() {
   cardSection.replaceChildren();
   showAllDigimon();
@@ -207,6 +209,8 @@ function backBtn() {
   displayAllBtn.style.display = "";
   levelSelect.style.display = "";
 }
+
+// search form functions
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -274,7 +278,7 @@ levelSelect.addEventListener("change", (e) => {
 });
 
 function filterLevel(target) {
-  for (let i = 1; i <= 50; i++) {
+  for (let i = 1; i <= 180; i++) {
     fetch(`https://digimon-api.com/api/v1/digimon/${i}`)
       .then((response) => response.json())
       .then((digimon) => displayCardsByLevel(digimon, target));
